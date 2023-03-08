@@ -37,18 +37,18 @@ const payment = async function (req, res) {
         reg_id: req.body.reg_id,
         amount: req.body.amount
     }
-    // try{
-    //     var pay_save = await ad_payment.create(ad_pay)
-    // }
-    // catch(err){
-    //     console.log(err);
-    // }
-    // try{
-    //     var update = await ad_payment.query("update admissions set payment_status=1 where user_id="+req.body.reg_id)
-    // }
-    // catch(err){
-    //     console.log(err);
-    // }
+    try{
+        var pay_save = await ad_payment.create(ad_pay)
+    }
+    catch(err){
+        console.log(err);
+    }
+    try{
+        var update = await ad_payment.query("update admissions set payment_status=1 where user_id="+req.body.reg_id)
+    }
+    catch(err){
+        console.log(err);
+    }
     try {
         const [result, meta] = await sequelize.query("select * from admissions where user_id=" + req.body.reg_id)
         const [result1, meta1] = await sequelize.query("select class, count(*) from students group by class")
@@ -76,8 +76,9 @@ const payment = async function (req, res) {
             Dob: result[0].St_Dob,
             class: result[0].St_class
         }
-        console.log(student_data);
-        // var stud_save = await students.create(student_data)
+        // console.log(student_data);
+        var stud_save = await students.create(student_data)
+        res.send("Payement is done successfully")
     }
     catch (err) {
         console.log(err);
