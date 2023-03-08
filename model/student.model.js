@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, Sequelize) => {
-    const student = sequelize.define({
+    const student = sequelize.define("students",{
         reg_num : {
             type: Sequelize.INTEGER,
             autoIncrement: true,
@@ -37,7 +37,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER
         },
         password : {
-            type : Sequelize.STRING
+            type : Sequelize.STRING,
+            defaultValue: "12345678"
         }
     });
+    return student
 }

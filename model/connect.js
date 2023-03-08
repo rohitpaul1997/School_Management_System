@@ -17,5 +17,6 @@ db.test = require('./test')(sequelize, Sequelize);
 db.apply = require('./application')(sequelize,Sequelize)
 db.admission = require("./admission.model")(sequelize,Sequelize)
 db.ad_payment = require("./admission_payment.model")(sequelize, Sequelize)
+db.students = require("./student.model")(sequelize, Sequelize)
 
 module.exports = db;

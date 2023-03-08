@@ -3,6 +3,7 @@ const { sequelize } = require("../model/connect")
 
 const registration = db.admission
 const ad_payment = db.ad_payment
+const students = db.students
 
 
 const student = async function (req, res) {
@@ -50,7 +51,21 @@ const payment = async function (req, res) {
     // }
     try {
         const [result, meta] = await sequelize.query("select * from admissions where user_id=" + req.body.reg_id)
+        const [result1, meta1] = await sequelize.query("select class, count(*) from students group by class")
+        var roll_count = 0
+        for(var i =0;i<result1.length;i++){
+            if(result1[i].class == result[0].St_class){
+                roll_count = result1[i]['count(*)']
+            }
+        }
+        if(result1[0]==undefined){
+            rolls =1 
+        }
+        else{
+            rolls = roll_count+1
+        }
         const student_data = {
+            roll : rolls,
             name: result[0].Student_name,
             Adress: result[0].St_Adress,
             Phone: result[0].St_Phone,
@@ -62,6 +77,7 @@ const payment = async function (req, res) {
             class: result[0].St_class
         }
         console.log(student_data);
+        // var stud_save = await students.create(student_data)
     }
     catch (err) {
         console.log(err);
